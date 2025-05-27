@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Expenses - Expense Tracker</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+  </head>
+  <body class="bg-dark text-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black shadow-sm">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="./dashboard.html"
+          >Expense Tracker</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Expenses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./summary.html">Summary</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./budget.html">Budget</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+      <header class="text-center mb-4">
+        <h1 class="display-5 fw-bold">All Expenses</h1>
+      </header>
+
+      <!-- Filters -->
+      <section class="mb-4">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-4">
+            <label for="filter-category" class="form-label">Category</label>
+            <select
+              id="filter-category"
+              class="form-select bg-dark text-light border-secondary"
+            >
+              <option value="">All</option>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Entertainment">Entertainment</option>
+              <!-- Add more categories -->
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="filter-date" class="form-label">Date</label>
+            <input
+              type="month"
+              id="filter-date"
+              class="form-control bg-dark text-light border-secondary"
+            />
+          </div>
+          <div class="col-md-4 text-md-end">
+            <button class="btn btn-outline-light" id="resetFilters">
+              Reset Filters
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Expense Table -->
+      <div class="table-responsive">
+        <table class="table table-dark table-hover table-bordered align-middle">
+          <thead class="table-secondary text-dark">
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="expenseTableBody">
+            <!-- JS -->
+            <tr>
+              <td>2025-05-20</td>
+              <td>Lunch</td>
+              <td>Food</td>
+              <td><span class="badge bg-danger">Expense</span></td>
+              <td class="text-danger">- $15.00</td>
+              <td>
+                <button class="btn btn-sm btn-outline-warning me-2">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>2025-05-20</td>
+              <td>Lunch</td>
+              <td>Food</td>
+              <td><span class="badge bg-danger">Expense</span></td>
+              <td class="text-danger">- $15.00</td>
+              <td>
+                <button class="btn btn-sm btn-outline-warning me-2">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr><tr>
+              <td>2025-05-20</td>
+              <td>Lunch</td>
+              <td>Food</td>
+              <td><span class="badge bg-danger">Expense</span></td>
+              <td class="text-danger">- $15.00</td>
+              <td>
+                <button class="btn btn-sm btn-outline-warning me-2">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr><tr>
+              <td>2025-05-20</td>
+              <td>Lunch</td>
+              <td>Food</td>
+              <td><span class="badge bg-danger">Expense</span></td>
+              <td class="text-danger">- $15.00</td>
+              <td>
+                <button class="btn btn-sm btn-outline-warning me-2">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <!-- Repeat rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- script -->
+    <script src="js/expenses.js"></script>
+  </body>
+</html>
