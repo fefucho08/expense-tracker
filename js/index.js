@@ -25,8 +25,8 @@ export const Categories = {
     HEALTH: "Health",
     EDUCATION: "Education",
     HOME: "Home",
-    OTHERS: "Others",
     INCOME: "Income",
+    OTHERS: "Others",
 };
 
 export const getData = () => {

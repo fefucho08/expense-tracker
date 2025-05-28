@@ -5,6 +5,7 @@ import {
     getTransactions,
     saveData,
     Transaction,
+    Categories,
 } from "./index.js";
 
 const createExpense = (transaction) => {
@@ -26,30 +27,6 @@ const createExpense = (transaction) => {
     renderTransactions();
 };
 
-document.querySelector("#addExpenseForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const date = new Date(document.querySelector("#expenseDate").value);
-    const description = document.querySelector("#expenseDescription").value;
-    const category = document.querySelector("#expenseCategory").value;
-    const amount = parseFloat(document.querySelector("#expenseAmount").value);
-
-    const transaction = new Transaction(
-        description,
-        category,
-        amount,
-        date,
-        Date.now()
-    );
-
-    bootstrap.Modal.getInstance(
-        document.querySelector("#addExpenseModal")
-    ).hide();
-
-    createExpense(transaction);
-
-    e.target.reset();
-});
-
 export const renderTransactions = () => {
     const transactions = getTransactions();
 
@@ -60,4 +37,46 @@ export const renderTransactions = () => {
     });
 };
 
-renderTransactions();
+const generateCategoriesOptions = () => {
+    const select = document.querySelector("#expenseCategory");
+    for (let category of Object.values(Categories)) {
+        const option = document.createElement("option");
+        option.innerText = category;
+        option.setAttribute("value", category);
+        select.append(option);
+    }
+};
+window.onload = () => {
+    document
+        .querySelector("#addExpenseForm")
+        .addEventListener("submit", (e) => {
+            e.preventDefault();
+            const date = new Date(document.querySelector("#expenseDate").value);
+            const description = document.querySelector(
+                "#expenseDescription"
+            ).value;
+            const category = document.querySelector("#expenseCategory").value;
+            const amount = parseFloat(
+                document.querySelector("#expenseAmount").value
+            );
+
+            const transaction = new Transaction(
+                description,
+                category,
+                amount,
+                date,
+                Date.now()
+            );
+
+            bootstrap.Modal.getInstance(
+                document.querySelector("#addExpenseModal")
+            ).hide();
+
+            createExpense(transaction);
+
+            e.target.reset();
+        });
+
+    renderTransactions();
+    generateCategoriesOptions();
+};
