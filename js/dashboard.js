@@ -1,78 +1,75 @@
-// Function to load existing expenses from localStorage
-function loadExpenses() {
-    const data = localStorage.getItem("expenses");
-    return data ? JSON.parse(data) : [];
-}
+import {
+    Categories,
+    getData,
+    getTransactions,
+    getTransactionsTotal,
+} from "./index.js";
 
-// Function to save a new expense to localStorage
-function saveExpense(expense) {
-    const expenses = loadExpenses();
-    expenses.push(expense);
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-}
+const sumAllExpenses = () => {
+    let sum = 0;
+    for (let category of Object.values(Categories)) {
+        if (category === Categories.INCOME) continue;
+        sum += getTransactionsTotal(category);
+    }
+    return sum;
+};
 
-// Function to render the 5 most recent transactions
-function renderRecentTransactions() {
-    const expenses = loadExpenses().slice(-5).reverse(); // Get the last 5 items
-    const tbody = document.querySelector("#expenses tbody");
-    tbody.innerHTML = "";
+const sumAllIncomes = () => {
+    return getTransactionsTotal(Categories.INCOME);
+};
 
-    expenses.forEach((exp) => {
-        const tr = document.createElement("tr");
+const getBalance = () => {
+    return sumAllIncomes() - sumAllExpenses();
+};
 
-        tr.innerHTML = `
-            <td>${exp.date}</td>
-            <td>${exp.description}</td>
-            <td>
-                <span class="badge ${
-                    exp.type === "income" ? "bg-success" : "bg-danger"
-                }">
-                    ${exp.type.charAt(0).toUpperCase() + exp.type.slice(1)}
-                </span>
-            </td>
-            <td class="${
-                exp.type === "income" ? "text-success" : "text-danger"
-            }">
-                ${exp.type === "income" ? "+" : "-"} $${parseFloat(
-            exp.amount
-        ).toFixed(2)}
-            </td>
-        `;
+const getBudgetTotal = () => {
+    let sum = 0;
+    let data = getData();
+    for (let category of Object.values(Categories)) {
+        if (category === Categories.INCOME) continue;
+        sum += parseFloat(data[category].budget);
+    }
+    return sum;
+};
 
-        tbody.appendChild(tr);
+const renderRecentTransactions = () => {
+    const transactions = getTransactions().slice(0, 5);
+
+    console.log(transactions);
+
+    document.querySelector("#recentExpensesTableBody").innerHTML = "";
+
+    transactions.forEach((transaction) => {
+        document
+            .querySelector("#recentExpensesTableBody")
+            .append(transaction.toShortTr());
     });
-}
+};
 
-// Handle form submission
-document
-    .getElementById("addExpenseForm")
-    .addEventListener("submit", function (e) {
-        e.preventDefault();
+window.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(
+        "#expensesAmount"
+    ).innerText = `$${sumAllExpenses().toFixed(2)}`;
 
-        const newExpense = {
-            date: document.getElementById("expenseDate").value,
-            description: document.getElementById("expenseDescription").value,
-            category: document.getElementById("expenseCategory").value,
-            type: document.getElementById("expenseType").value,
-            amount: parseFloat(document.getElementById("expenseAmount").value),
-        };
+    document.querySelector(
+        "#incomeAmount"
+    ).innerText = `$${sumAllIncomes().toFixed(2)}`;
 
-        saveExpense(newExpense);
+    document.querySelector(
+        "#balanceAmount"
+    ).innerText = `$${getBalance().toFixed(2)}`;
 
-        // Close the modal
-        const modal = bootstrap.Modal.getInstance(
-            document.getElementById("addExpenseModal")
-        );
-        modal.hide();
+    document.querySelector(
+        "#totalBudget"
+    ).innerText = `$${getBudgetTotal().toFixed(2)}`;
 
-        // Reset the form
-        this.reset();
+    document.querySelector(
+        "#usedBudget"
+    ).innerText = `$${sumAllExpenses().toFixed(2)}`;
 
-        // Refresh recent transactions
-        renderRecentTransactions();
-    });
+    document.querySelector("#remainingBudget").innerText = `$${(
+        getBudgetTotal() - sumAllExpenses()
+    ).toFixed(2)}`;
 
-// On page load, display recent transactions
-document.addEventListener("DOMContentLoaded", function () {
     renderRecentTransactions();
 });

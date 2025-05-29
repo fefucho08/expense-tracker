@@ -53,6 +53,9 @@ categories.forEach((category) => {
 
     const saveButton = document.querySelector(`#${category} button`);
     const budgetInput = document.querySelector(`#${category} input`);
+    document.querySelector(`#${category} .budgetSpent`).innerText =
+        getTransactionsTotal(category).toFixed(2);
+    budgetInput.value = parseFloat(getData()[category].budget);
     const spentElement = document.querySelector(`#${category} .budgetSpent`);
     
     const spent = getTransactionsTotal(category);

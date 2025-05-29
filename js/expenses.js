@@ -32,10 +32,6 @@ export const updateExpense = (transaction) => {
     let categoryData = data[transaction.category].transactions;
     const found = categoryData.find((element) => element.id == transaction.id);
 
-    console.log(transaction.id)
-
-    console.log(found);
-
     Object.assign(found, transaction);
 
     saveData(data);
@@ -108,6 +104,39 @@ window.onload = () => {
             createExpense(transaction);
 
             e.target.reset();
+        });
+
+    document
+        .querySelector("#updateExpenseForm")
+        .addEventListener("submit", (e) => {
+            e.preventDefault();
+            const date = new Date(
+                document.querySelector("#updateExpenseDate").value
+            );
+            const description = document.querySelector(
+                "#updateExpenseDescription"
+            ).value;
+            const category = document.querySelector(
+                "#updateExpenseCategory"
+            ).value;
+            const amount = parseFloat(
+                document.querySelector("#updateExpenseAmount").value
+            );
+            const id = document.querySelector("#updateTransactionId").value;
+
+            const transaction = new Transaction(
+                description,
+                category,
+                amount,
+                date,
+                id
+            );
+
+            updateExpense(transaction);
+            const modal = bootstrap.Modal.getInstance(
+                document.querySelector("#updateExpenseModal")
+            );
+            modal.hide();
         });
 
     document
