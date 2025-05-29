@@ -1,4 +1,4 @@
-import { renderTransactions } from "./expenses.js";
+import { renderTransactions, updateExpense } from "./expenses.js";
 
 const initialize = () => {
     const expenseInfo = {};
@@ -154,14 +154,50 @@ export class Transaction {
         updateBtn.className = "btn btn-sm btn-outline-warning me-2";
 
         updateBtn.addEventListener("click", () => {
-            const modal = new bootstrap.Modal(document.querySelector("#updateExpenseModal"));
+            const modal = new bootstrap.Modal(
+                document.querySelector("#updateExpenseModal")
+            );
             modal.show();
 
-            document.querySelector("#updateExpenseDate").value = this.date.toLocaleDateString("en-CA", { timeZone: "America/Vancouver" });
-            document.querySelector("#updateExpenseDescription").value = this.description;
-            document.querySelector("#updateExpenseCategory").value = this.category;
+            document.querySelector("#updateExpenseDate").value =
+                this.date.toLocaleDateString("en-CA", {
+                    timeZone: "America/Vancouver",
+                });
+            document.querySelector("#updateExpenseDescription").value =
+                this.description;
+            document.querySelector("#updateExpenseCategory").value =
+                this.category;
             document.querySelector("#updateExpenseAmount").value = this.amount;
-        })
+
+            document
+                .querySelector("#updateExpenseForm")
+                .addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    const date = new Date(
+                        document.querySelector("#updateExpenseDate").value
+                    );
+                    const description = document.querySelector(
+                        "#updateExpenseDescription"
+                    ).value;
+                    const category = document.querySelector(
+                        "#updateExpenseCategory"
+                    ).value;
+                    const amount = parseFloat(
+                        document.querySelector("#updateExpenseAmount").value
+                    );
+
+                    const transaction = new Transaction(
+                        description,
+                        category,
+                        amount,
+                        date,
+                        this.id
+                    );
+
+                    updateExpense(transaction);
+                    modal.hide();
+                });
+        });
 
         const updateIcon = document.createElement("i");
         updateIcon.className = "bi bi-pencil-square";
