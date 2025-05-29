@@ -61,18 +61,19 @@
       </div>
 
       <!-- Chart Container -->
-      <div class="row justify-content-center">
-        <div class="col-md-6 mb-5">
-          <canvas id="categoryChart"></canvas>
-        </div>
-        <div class="col-md-6 mb-5">
-          <canvas id="monthlyChart"></canvas>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8 col-lg-6">
+            <div class="ratio ratio-1x1">
+              <canvas id="categoryPieChart"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/summary.js"></script>
+    <script src="../js/summary.js" type="module"></script>
   </body>
 </html>
