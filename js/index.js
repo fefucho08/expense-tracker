@@ -165,11 +165,10 @@ export class Transaction {
         const updateBtn = document.createElement("button");
         updateBtn.className = "btn btn-sm btn-outline-warning me-2";
         updateBtn.setAttribute("data-bs-toggle", "modal");
-        updateBtn.setAttribute("data-bs-target", "#updateExpenseModal");
-
+        updateBtn.setAttribute("data-bs-target", "#updateExpenseModal")
         updateBtn.addEventListener("click", () => {
             document.querySelector("#updateExpenseDate").value = this.date;
-            document.querySelector("#updateExpenseDescription").value =
+          document.querySelector("#updateExpenseDescription").value =
                 this.description;
             document.querySelector("#updateExpenseCategory").value =
                 this.category;
