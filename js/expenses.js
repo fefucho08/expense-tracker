@@ -39,7 +39,19 @@ export const updateExpense = (transaction) => {
 };
 
 export const renderTransactions = () => {
-    const transactions = getTransactions();
+    const category = document.querySelector("#filter-category").value;
+    const date = document.querySelector("#filter-date").value;
+
+    let year;
+    let month;
+
+    if (date) {
+        const splitString = date.split("-");
+        year = parseInt(splitString[0]);
+        month = parseInt(splitString[1]);
+    }
+
+    const transactions = getTransactions(category, year, month);
 
     document.querySelector("#expenseTableBody").innerHTML = "";
 
@@ -51,8 +63,9 @@ export const renderTransactions = () => {
 const generateCategoriesOptions = () => {
     const selectAdd = document.querySelector("#expenseCategory");
     const selectUpdate = document.querySelector("#updateExpenseCategory");
+    const selectFilter = document.querySelector("#filter-category");
 
-    [selectAdd, selectUpdate].forEach((select) => {
+    [selectAdd, selectUpdate, selectFilter].forEach((select) => {
         for (let category of Object.values(Categories)) {
             const option = document.createElement("option");
             option.innerText = category;
@@ -92,6 +105,20 @@ window.onload = () => {
 
             e.target.reset();
         });
+
+    document
+        .querySelector("#filter-category")
+        .addEventListener("change", () => {
+            renderTransactions();
+        });
+
+    document.querySelector("#resetFilters").addEventListener("click", () => {
+        window.location.reload();
+    });
+
+    document.querySelector("#filter-date").addEventListener("change", () => {
+        renderTransactions();
+    });
 
     renderTransactions();
     generateCategoriesOptions();

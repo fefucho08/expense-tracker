@@ -61,8 +61,12 @@ export const getTransactionsTotal = (category) => {
     return sum;
 };
 
-export const getTransactions = (category = undefined) => {
-    const transactions = [];
+export const getTransactions = (
+    category = undefined,
+    year = undefined,
+    month = undefined
+) => {
+    let transactions = [];
     const data = getData();
     if (category) {
         data[category].transactions.forEach((transaction) => {
@@ -99,6 +103,14 @@ export const getTransactions = (category = undefined) => {
             return -1;
         }
     });
+
+    if (month && year) {
+        transactions = transactions.filter(
+            (transaction) =>
+                transaction.date.getMonth() + 1 === month &&
+                transaction.date.getFullYear() === year
+        );
+    }
 
     return transactions;
 };
