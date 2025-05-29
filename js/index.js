@@ -1,4 +1,4 @@
-import { renderTransactions, updateExpense } from "./expenses.js";
+import { renderTransactions } from "./expenses.js";
 
 const initialize = () => {
     const expenseInfo = {};
@@ -164,51 +164,17 @@ export class Transaction {
 
         const updateBtn = document.createElement("button");
         updateBtn.className = "btn btn-sm btn-outline-warning me-2";
+        updateBtn.setAttribute("data-bs-toggle", "modal");
+        updateBtn.setAttribute("data-bs-target", "#updateExpenseModal");
 
         updateBtn.addEventListener("click", () => {
-            const modal = new bootstrap.Modal(
-                document.querySelector("#updateExpenseModal")
-            );
-            modal.show();
-
-            document.querySelector("#updateExpenseDate").value =
-                this.date.toLocaleDateString("en-CA", {
-                    timeZone: "America/Vancouver",
-                });
+            document.querySelector("#updateExpenseDate").value = this.date;
             document.querySelector("#updateExpenseDescription").value =
                 this.description;
             document.querySelector("#updateExpenseCategory").value =
                 this.category;
             document.querySelector("#updateExpenseAmount").value = this.amount;
-
-            document
-                .querySelector("#updateExpenseForm")
-                .addEventListener("submit", (e) => {
-                    e.preventDefault();
-                    const date = new Date(
-                        document.querySelector("#updateExpenseDate").value
-                    );
-                    const description = document.querySelector(
-                        "#updateExpenseDescription"
-                    ).value;
-                    const category = document.querySelector(
-                        "#updateExpenseCategory"
-                    ).value;
-                    const amount = parseFloat(
-                        document.querySelector("#updateExpenseAmount").value
-                    );
-
-                    const transaction = new Transaction(
-                        description,
-                        category,
-                        amount,
-                        date,
-                        this.id
-                    );
-
-                    updateExpense(transaction);
-                    modal.hide();
-                });
+            document.querySelector("#updateTransactionId").value = this.id;
         });
 
         const updateIcon = document.createElement("i");
@@ -229,6 +195,30 @@ export class Transaction {
 
         actionsTd.append(updateBtn, deleteBtn);
         tr.append(actionsTd);
+
+        return tr;
+    }
+
+    toShortTr() {
+        const tr = document.createElement("tr");
+        const year = this.date.getFullYear();
+        const month = ("0" + (1 + this.date.getMonth())).slice(-2);
+        const day = ("0" + this.date.getDate()).slice(-2);
+
+        tr.innerHTML = `
+            <td>${month}/${day}/${year}</td>
+            <td>${this.description}</td>
+            <td>${this.category}</td>
+            <td class="${
+                this.category === Categories.INCOME
+                    ? "text-success"
+                    : "text-danger"
+            }">
+                ${
+                    this.category === Categories.INCOME ? "+" : "-"
+                } $${parseFloat(this.amount).toFixed(2)}
+            </td>
+        `;
 
         return tr;
     }

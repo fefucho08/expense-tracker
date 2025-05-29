@@ -52,7 +52,7 @@ categories.forEach((category) => {
     const saveButton = document.querySelector(`#${category} button`);
     const budgetInput = document.querySelector(`#${category} input`);
     document.querySelector(`#${category} .budgetSpent`).innerText =
-        getTransactionsTotal(category);
+        getTransactionsTotal(category).toFixed(2);
     budgetInput.value = parseFloat(getData()[category].budget);
     saveButton.addEventListener("click", () => {
         if (budgetInput.value) {
