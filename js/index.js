@@ -129,9 +129,6 @@ export class Transaction {
 
     toTr() {
         const tr = document.createElement("tr");
-
-        console.log(this.date);
-
         const year = this.date.getFullYear();
         const month = ("0" + (1 + this.date.getMonth())).slice(-2);
         const day = ("0" + this.date.getDate()).slice(-2);
@@ -155,6 +152,16 @@ export class Transaction {
 
         const updateBtn = document.createElement("button");
         updateBtn.className = "btn btn-sm btn-outline-warning me-2";
+
+        updateBtn.addEventListener("click", () => {
+            const modal = new bootstrap.Modal(document.querySelector("#updateExpenseModal"));
+            modal.show();
+
+            document.querySelector("#updateExpenseDate").value = this.date.toLocaleDateString("en-CA", { timeZone: "America/Vancouver" });
+            document.querySelector("#updateExpenseDescription").value = this.description;
+            document.querySelector("#updateExpenseCategory").value = this.category;
+            document.querySelector("#updateExpenseAmount").value = this.amount;
+        })
 
         const updateIcon = document.createElement("i");
         updateIcon.className = "bi bi-pencil-square";

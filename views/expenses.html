@@ -197,6 +197,88 @@
             </div>
         </div>
 
+        <!-- Update Expense Modal -->
+        <div
+            class="modal fade"
+            id="updateExpenseModal"
+            tabindex="-1"
+            aria-labelledby="updateExpenseModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-dark text-light border-secondary">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateExpenseModalLabel">
+                            Update Expense
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <form id="updateExpenseForm">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="updateExpenseDate" class="form-label"
+                                    >Date</label
+                                >
+                                <input
+                                    type="date"
+                                    class="form-control bg-dark text-light border-secondary"
+                                    id="updateExpenseDate"
+                                    required
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label
+                                    for="updateExpenseDescription"
+                                    class="form-label"
+                                    >Description</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control bg-dark text-light border-secondary"
+                                    id="updateExpenseDescription"
+                                    required
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateExpenseCategory" class="form-label"
+                                    >Category</label
+                                >
+                                <select
+                                    class="form-select bg-dark text-light border-secondary"
+                                    id="updateExpenseCategory"
+                                    required
+                                >
+                                    <option value="">Select category</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateExpenseAmount" class="form-label"
+                                    >Amount ($)</label
+                                >
+                                <input
+                                    type="number"
+                                    class="form-control bg-dark text-light border-secondary"
+                                    id="updateExpenseAmount"
+                                    step="0.01"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary w-100">
+                                Update Expense
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- script -->
