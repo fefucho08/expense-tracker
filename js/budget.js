@@ -47,17 +47,38 @@ const container = document.querySelector("#budgetFormContainer");
 const categories = Object.values(Categories).filter(
     (category) => category !== Categories.INCOME
 );
+
 categories.forEach((category) => {
     container.append(new BudgetCard(category).toComponent());
+
     const saveButton = document.querySelector(`#${category} button`);
     const budgetInput = document.querySelector(`#${category} input`);
-    document.querySelector(`#${category} .budgetSpent`).innerText =
-        getTransactionsTotal(category);
-    budgetInput.value = parseFloat(getData()[category].budget);
+    const spentElement = document.querySelector(`#${category} .budgetSpent`);
+    
+    const spent = getTransactionsTotal(category);
+    const budget = parseFloat(getData()[category].budget);
+
+    spentElement.innerText = spent.toFixed(2);
+
+    if (spent > budget) {
+        spentElement.classList.add("text-danger");
+    } else {
+        spentElement.classList.remove("text-danger");
+    }
+
+    budgetInput.value = budget;
+
     saveButton.addEventListener("click", () => {
         if (budgetInput.value) {
             saveBudget(category, budgetInput.value);
             createAlert("Budget saved!", "success");
+
+            const updatedBudget = parseFloat(budgetInput.value);
+            if (spent > updatedBudget) {
+                spentElement.classList.add("text-danger");
+            } else {
+                spentElement.classList.remove("text-danger");
+            }
         } else {
             createAlert("Please fill the input", "danger");
         }
