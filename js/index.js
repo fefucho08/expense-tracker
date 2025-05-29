@@ -164,13 +164,9 @@ export class Transaction {
 
         const updateBtn = document.createElement("button");
         updateBtn.className = "btn btn-sm btn-outline-warning me-2";
-
+        updateBtn.setAttribute("data-bs-toggle", "modal");
+        updateBtn.setAttribute("data-bs-target", "#updateExpenseModal")
         updateBtn.addEventListener("click", () => {
-            const modal = new bootstrap.Modal(
-                document.querySelector("#updateExpenseModal")
-            );
-            modal.show();
-
             document.querySelector("#updateExpenseDate").value =
                 this.date.toLocaleDateString("en-CA", {
                     timeZone: "America/Vancouver",
@@ -206,8 +202,10 @@ export class Transaction {
                         this.id
                     );
 
+                    bootstrap.Modal.getInstance(document.querySelector("#updateExpenseModal")).hide();
                     updateExpense(transaction);
-                    modal.hide();
+
+                    e.target.reset();
                 });
         });
 

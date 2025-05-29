@@ -30,7 +30,11 @@ const createExpense = (transaction) => {
 export const updateExpense = (transaction) => {
     const data = getData();
     let categoryData = data[transaction.category].transactions;
-    const found = categoryData.find((element) => element.id === transaction.id);
+    const found = categoryData.find((element) => element.id == transaction.id);
+
+    console.log(transaction.id)
+
+    console.log(found);
 
     Object.assign(found, transaction);
 
