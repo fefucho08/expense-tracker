@@ -23,7 +23,7 @@ class BudgetCard {
                     class='form-control bg-dark text-light'
                     placeholder='Enter amount'
                   />
-                  <p class='mt-3'><strong>Spent: </strong>$<span class='budgetSpent'>0.00</span></p>
+                  <p class='mt-3'><strong>Spent: </strong><span class='budgetSpent'>$0.00</span></p>
                 </div>
                 <button class='btn btn-outline-primary w-100'>Save</button>
               </div>
@@ -57,11 +57,11 @@ categories.forEach((category) => {
         getTransactionsTotal(category).toFixed(2);
     budgetInput.value = parseFloat(getData()[category].budget);
     const spentElement = document.querySelector(`#${category} .budgetSpent`);
-    
+
     const spent = getTransactionsTotal(category);
     const budget = parseFloat(getData()[category].budget);
 
-    spentElement.innerText = spent.toFixed(2);
+    spentElement.innerText = `$${spent.toFixed(2)}`;
 
     if (spent > budget) {
         spentElement.classList.add("text-danger");

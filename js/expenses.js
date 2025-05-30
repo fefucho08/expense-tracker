@@ -27,14 +27,13 @@ const createExpense = (transaction) => {
     renderTransactions();
 };
 
-export const updateExpense = (transaction) => {
-    const data = getData();
-    let categoryData = data[transaction.category].transactions;
-    const found = categoryData.find((element) => element.id == transaction.id);
-
-    Object.assign(found, transaction);
-
-    saveData(data);
+const updateExpense = (newTransaction) => {
+    const transactions = getTransactions();
+    const prevTransaction = transactions.find(
+        (transaction) => transaction.id == newTransaction.id
+    );
+    prevTransaction.delete();
+    createExpense(newTransaction);
     renderTransactions();
 };
 
@@ -110,9 +109,7 @@ window.onload = () => {
         .querySelector("#updateExpenseForm")
         .addEventListener("submit", (e) => {
             e.preventDefault();
-            const date = new Date(
-                document.querySelector("#updateExpenseDate").value
-            );
+            const date = document.querySelector("#updateExpenseDate").value;
             const description = document.querySelector(
                 "#updateExpenseDescription"
             ).value;

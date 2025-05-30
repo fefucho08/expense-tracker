@@ -121,21 +121,20 @@ export class Transaction {
         this.description = description;
         this.category = category;
         this.amount = amount;
-        this.id = id;
+        this.id = Number(id);
     }
 
-    static delete(category, id) {
+    delete() {
         let data = getData();
-        let categoryData = data[category];
+        let categoryData = data[this.category];
         categoryData = {
             ...categoryData,
             transactions: categoryData.transactions.filter(
-                (transaction) => transaction.id !== id
+                (transaction) => transaction.id != this.id
             ),
         };
 
-        data = { ...data, [category]: categoryData };
-
+        data = { ...data, [this.category]: categoryData };
         saveData(data);
     }
 
@@ -165,10 +164,14 @@ export class Transaction {
         const updateBtn = document.createElement("button");
         updateBtn.className = "btn btn-sm btn-outline-warning me-2";
         updateBtn.setAttribute("data-bs-toggle", "modal");
-        updateBtn.setAttribute("data-bs-target", "#updateExpenseModal")
+        updateBtn.setAttribute("data-bs-target", "#updateExpenseModal");
+
         updateBtn.addEventListener("click", () => {
-            document.querySelector("#updateExpenseDate").value = this.date;
-          document.querySelector("#updateExpenseDescription").value =
+            document.querySelector("#updateExpenseDate").value =
+                this.date.toLocaleDateString("en-CA", {
+                    timeZone: "America/Vancouver",
+                });
+            document.querySelector("#updateExpenseDescription").value =
                 this.description;
             document.querySelector("#updateExpenseCategory").value =
                 this.category;
@@ -184,7 +187,7 @@ export class Transaction {
         deleteBtn.className = "btn btn-sm btn-outline-danger me-2";
 
         deleteBtn.addEventListener("click", () => {
-            Transaction.delete(this.category, this.id);
+            this.delete();
             renderTransactions();
         });
 
