@@ -35,8 +35,6 @@ const getBudgetTotal = () => {
 const renderRecentTransactions = () => {
     const transactions = getTransactions().slice(0, 5);
 
-    console.log(transactions);
-
     document.querySelector("#recentExpensesTableBody").innerHTML = "";
 
     transactions.forEach((transaction) => {

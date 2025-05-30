@@ -14,13 +14,20 @@ const createExpense = (transaction) => {
 
     saveData(data);
 
-    if (
-        getTransactionsTotal(transaction.category) >
-        data[transaction.category].budget
-    ) {
+    const categoryTotal = getTransactionsTotal(transaction.category);
+    const categoryBudget = data[transaction.category].budget;
+    if (categoryTotal > categoryBudget) {
         createAlert(
             `Your expenses in ${transaction.category} is over the budget`,
             "danger"
+        );
+    } else if (categoryBudget - categoryTotal < 20) {
+        const remaining = categoryBudget - categoryTotal;
+        createAlert(
+            `You only have $${remaining.toFixed(2)} left in ${
+                transaction.category
+            }`,
+            "warning"
         );
     }
 
