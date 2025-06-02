@@ -117,7 +117,13 @@ export const getTransactions = (
 
 export class Transaction {
     constructor(description, category, amount, date, id) {
-        this.date = new Date(date);
+        // date
+        if (typeof date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(date)) {
+            const [year, month, day] = date.split("-");
+            this.date = new Date(Number(year), Number(month) - 1, Number(day));
+        } else {
+            this.date = new Date(date);
+        }
         this.description = description;
         this.category = category;
         this.amount = amount;

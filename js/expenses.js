@@ -86,7 +86,12 @@ window.onload = () => {
         .querySelector("#addExpenseForm")
         .addEventListener("submit", (e) => {
             e.preventDefault();
-            const date = new Date(document.querySelector("#expenseDate").value);
+            
+            // date
+            const dateStr = document.querySelector("#expenseDate").value;
+            const [year, month, day] = dateStr.split("-");
+            const date = new Date(Number(year), Number(month) - 1, Number(day));
+
             const description = document.querySelector(
                 "#expenseDescription"
             ).value;
