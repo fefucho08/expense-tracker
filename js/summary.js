@@ -2,7 +2,7 @@ import { getTransactions, Categories } from "./index.js";
 
 let pieChart;
 
-function getMonthlyCategoryTotals(year, month) {
+const getMonthlyCategoryTotals = (year, month) => {
   const totals = {};
   for (const category of Object.values(Categories)) {
     if (category !== Categories.INCOME) {
@@ -22,9 +22,9 @@ function getMonthlyCategoryTotals(year, month) {
   });
 
   return totals;
-}
+};
 
-function renderPieChart(year, month) {
+const renderPieChart = (year, month) => {
   const totals = getMonthlyCategoryTotals(year, month);
   const labels = [];
   const data = [];
@@ -39,6 +39,11 @@ function renderPieChart(year, month) {
   const ctx = document.getElementById("categoryPieChart").getContext("2d");
 
   if (pieChart) pieChart.destroy();
+
+  const chartTitle =
+    month && year
+      ? `Expenses by Category – ${month}/${year}`
+      : `Expenses by Category – All`;
 
   pieChart = new Chart(ctx, {
     type: "pie",
@@ -74,7 +79,7 @@ function renderPieChart(year, month) {
       plugins: {
         title: {
           display: true,
-          text: `Expenses by Category – ${month}/${year}`,
+          text: chartTitle,
           color: "#ffffff",
           font: {
             size: 18,
@@ -110,7 +115,7 @@ function renderPieChart(year, month) {
       },
     },
   });
-}
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   const monthInput = document.getElementById("summaryMonth");
@@ -119,10 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
     today.getMonth() + 1
   ).padStart(2, "0")}`;
 
-  function updateChart() {
+  const updateChart = () => {
     const [year, month] = monthInput.value.split("-");
     renderPieChart(Number(year), Number(month));
-  }
+  };
 
   monthInput.addEventListener("change", updateChart);
 
