@@ -12,12 +12,12 @@ const getMonthlyCategoryTotals = (year, month) => {
 
   const transactions = getTransactions(undefined, year, month);
 
-  transactions.forEach((tx) => {
+  transactions.forEach((transaction) => {
     if (
-      tx.category !== Categories.INCOME &&
-      totals[tx.category] !== undefined
+      transaction.category !== Categories.INCOME &&
+      totals[transaction.category] !== undefined
     ) {
-      totals[tx.category] += parseFloat(tx.amount);
+      totals[transaction.category] += parseFloat(transaction.amount);
     }
   });
 
@@ -36,7 +36,7 @@ const renderPieChart = (year, month) => {
     }
   }
 
-  const ctx = document.getElementById("categoryPieChart").getContext("2d");
+  const pieChartContext = document.getElementById("categoryPieChart").getContext("2d");
 
   if (pieChart) pieChart.destroy();
 
@@ -45,7 +45,7 @@ const renderPieChart = (year, month) => {
       ? `Expenses by Category – ${month}/${year}`
       : `Expenses by Category – All`;
 
-  pieChart = new Chart(ctx, {
+  pieChart = new Chart(pieChartContext, {
     type: "pie",
     data: {
       labels,
