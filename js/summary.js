@@ -100,16 +100,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const monthInput = document.getElementById("summaryMonth");
 
   const updateChart = () => {
-    const value = monthInput.value;
+    const monthValue = monthInput.value;
 
-    if (value) {
-      const [year, month] = value.split("-");
+    if (monthValue) {
+      const [year, month] = monthValue.split("-");
       renderPieChart(Number(year), Number(month));
     } else {
       renderPieChart();
     }
   };
-  
+
   monthInput.addEventListener("change", updateChart);
 
   updateChart();
