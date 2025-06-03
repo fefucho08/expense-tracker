@@ -4,7 +4,7 @@ let pieChart;
 
 const getMonthlyCategoryTotals = (year, month) => {
   const totals = {};
-  for (const category of Object.values(Categories)) {
+  for (let category of Object.values(Categories)) {
     if (category !== Categories.INCOME) {
       totals[category] = 0;
     }
@@ -29,14 +29,16 @@ const renderPieChart = (year, month) => {
   const labels = [];
   const data = [];
 
-  for (let [category, amount] of Object.entries(totals)) {
+  for (const [category, amount] of Object.entries(totals)) {
     if (amount > 0) {
       labels.push(category);
       data.push(amount);
     }
   }
 
-  const pieChartContext = document.getElementById("categoryPieChart").getContext("2d");
+  const pieChartContext = document
+    .getElementById("categoryPieChart")
+    .getContext("2d");
 
   if (pieChart) pieChart.destroy();
 
@@ -53,54 +55,31 @@ const renderPieChart = (year, month) => {
         {
           data,
           backgroundColor: [
-            "#e6194b",
-            "#3cb44b",
-            "#ffe119",
-            "#4363d8",
-            "#f58231",
-            "#911eb4",
-            "#46f0f0",
-            "#f032e6",
-            "#bcf60c",
-            "#fabebe", 
-            "#008080",
-            "#e6beff",
-          ],
-        },
-      ],
+            "#e6194b", "#3cb44b", "#ffe119",
+            "#4363d8", "#f58231", "#911eb4",
+            "#46f0f0", "#f032e6", "#bcf60c",
+            "#fabebe", "#008080", "#e6beff"
+          ]
+        }
+      ]
     },
     options: {
-      layout: {
-        padding: {
-          top: 20,
-          bottom: 20,
-        },
-      },
+      layout: { padding: { top: 20, bottom: 20 } },
       plugins: {
         title: {
           display: true,
           text: chartTitle,
           color: "#ffffff",
-          font: {
-            size: 18,
-            weight: "bold",
-          },
-          padding: {
-            bottom: 20,
-          },
+          font: { size: 18, weight: "bold" },
+          padding: { bottom: 20 }
         },
         legend: {
           labels: {
             color: "#ffffff",
-            font: {
-              size: 12,
-            },
-            padding: 20,
+            font: { size: 12 },
+            padding: 20
           },
-          position: "bottom",
-          title: {
-            display: false,
-          },
+          position: "bottom"
         },
         tooltip: {
           callbacks: {
@@ -109,26 +88,28 @@ const renderPieChart = (year, month) => {
               const total = context.chart._metasets[context.datasetIndex].total;
               const percentage = ((value / total) * 100).toFixed(1);
               return ` $${value} (${percentage}%)`;
-            },
-          },
-        },
-      },
-    },
+            }
+          }
+        }
+      }
+    }
   });
 };
 
 document.addEventListener("DOMContentLoaded", () => {
   const monthInput = document.getElementById("summaryMonth");
-  const today = new Date();
-  monthInput.value = `${today.getFullYear()}-${String(
-    today.getMonth() + 1
-  ).padStart(2, "0")}`;
 
   const updateChart = () => {
-    const [year, month] = monthInput.value.split("-");
-    renderPieChart(Number(year), Number(month));
-  };
+    const value = monthInput.value;
 
+    if (value) {
+      const [year, month] = value.split("-");
+      renderPieChart(Number(year), Number(month));
+    } else {
+      renderPieChart();
+    }
+  };
+  
   monthInput.addEventListener("change", updateChart);
 
   updateChart();
