@@ -1,7 +1,7 @@
 # 💸 Expense Tracker
 
 ## 📝 Overview
-Expense Tracker is a client-side web application that helps users track and manage their personal expenses. Built entirely with vanilla JavaScript, HTML, and CSS (with Bootstrap), it allows users to add, edit, delete, and categorize expenses — while storing all data in the browser's **Local Storage**. No backend or database setup is needed.
+Expense Tracker is a client-side web application that helps users track and manage their personal expenses. Built entirely with JavaScript, HTML, and Bootstrap, it allows users to add, edit, delete, and categorize expenses — while storing all data in the browser's **Local Storage**. No backend or database setup is needed.
 
 This project emphasizes **usability**, **visual feedback**, and **budget management**, with intuitive forms and dynamic charts.
 
