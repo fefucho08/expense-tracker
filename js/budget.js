@@ -62,14 +62,13 @@ categories.forEach((category) => {
     const budget = parseFloat(getData()[category].budget);
 
     spentElement.innerText = `$${spent.toFixed(2)}`;
+    budgetInput.value = budget;
 
     if (spent > budget) {
         spentElement.classList.add("text-danger");
     } else {
         spentElement.classList.remove("text-danger");
     }
-
-    budgetInput.value = budget;
 
     saveButton.addEventListener("click", () => {
         if (budgetInput.value) {
